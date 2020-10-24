@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MoviesGallery.App.Data;
+using MoviesGallery.App.Models;
 
 namespace MoviesGallery.App
 {
@@ -12,7 +13,7 @@ namespace MoviesGallery.App
         {
             services.AddControllersWithViews();
 
-            services.AddSingleton<MockRepository>();
+            services.AddSingleton<IRepository<Movie>, MockRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

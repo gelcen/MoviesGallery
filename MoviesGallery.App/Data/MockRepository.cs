@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace MoviesGallery.App.Data
 {
-	public class MockRepository
+	public class MockRepository : IRepository<Movie>
 	{
-		public List<Movie> Data = new List<Movie>
+		private List<Movie> _data = new List<Movie>
 		{
 			new Movie { Title = "ligula", Description = "nascetur ridiculus mus. Proin vel nisl. Quisque fringilla euismod enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris sagittis placerat. Cras dictum ultricies ligula. Nullam enim. Sed nulla ante, iaculis nec,", ReleaseYear = 2072 },
 			new Movie { Title = "nec", Description = "ut, molestie in, tempus eu, ligula. Aenean euismod mauris eu elit. Nulla facilisi. Sed neque. Sed eget lacus. Mauris non dui nec urna suscipit nonummy. Fusce fermentum fermentum arcu. Vestibulum ante ipsum", ReleaseYear = 1985 },
@@ -38,11 +38,42 @@ namespace MoviesGallery.App.Data
 
         public MockRepository()
         {
-            foreach (var item in Data)
+            foreach (var item in _data)
             {
-				item.Title.Substring(0, 1).ToUpper();
-				item.Description.Substring(0, 1).ToUpper();
+				item.Title = char.ToUpper(item.Title[0]) + item.Title.Substring(1);
+				item.Description = char.ToUpper(item.Description[0]) + 
+					item.Description.Substring(1);
 			}
         }
-	}
+
+        public void Create(Movie item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Movie>> Filter(Func<Movie, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Movie>> GetAll()
+        {
+			return Task.FromResult<IEnumerable<Movie>>(_data);
+        }
+
+        public Task<Movie> GetById(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Movie item)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
