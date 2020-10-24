@@ -1,19 +1,24 @@
-﻿<div>
+﻿@model IEnumerable<HomePageMovieViewModel>
+
+<div>
     <h1>
         Hello World
     </h1>
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row no-gutters">
-            <div class="col-md-4" style="background-color: dimgrey;">
-                @*<img src="..." class="card-img" alt="...">*@
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <button type="button" class="btn btn-primary">Подробнее</button>
+    @foreach (var movie in Model)
+    {
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row no-gutters">
+                <div class="col-md-4" style="background-color: dimgrey;">
+                    @*<img src="..." class="card-img" alt="...">*@
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@movie.Title</h5>
+                        <p class="card-text">@movie.Description</p>
+                        <button type="button" class="btn btn-primary">Подробнее</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 </div>
