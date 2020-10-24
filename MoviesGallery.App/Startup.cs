@@ -18,6 +18,7 @@ namespace MoviesGallery.App
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
 
             app.UseRouting();
 
