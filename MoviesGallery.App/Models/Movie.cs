@@ -1,4 +1,6 @@
-﻿namespace MoviesGallery.App.Models
+﻿using System;
+
+namespace MoviesGallery.App.Models
 {
     public class Movie
     {
@@ -10,6 +12,6 @@
 
         public int ReleaseYear { get; set; }
 
-
+        public DateTime AddDate { get; set; }
     }
 }

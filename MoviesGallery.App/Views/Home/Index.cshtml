@@ -1,24 +1,30 @@
-﻿@model IEnumerable<HomePageMovieViewModel>
+﻿@model cloudscribe.Pagination.Models.PagedResult<HomePageMovieViewModel>
+@{ 
+    ViewData["Controller"] = "Home";
+    ViewData["Action"] = "Index";
+}
 
-<div>
-    <h1>
-        Hello World
-    </h1>
-    @foreach (var movie in Model)
-    {
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row no-gutters">
-                <div class="col-md-4" style="background-color: dimgrey;">
-                    @*<img src="..." class="card-img" alt="...">*@
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">@movie.Title</h5>
-                        <p class="card-text">@movie.Description</p>
-                        <button type="button" class="btn btn-primary">Подробнее</button>
+
+    <div>
+        <h1>
+            Hello World
+        </h1>
+        @foreach (var movie in Model.Data)
+        {
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4" style="background-color: dimgrey;">
+                        @*<img src="..." class="card-img" alt="...">*@
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                            <p class="card-text">@movie.Description</p>
+                            <button type="button" class="btn btn-primary">Подробнее</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
+        <partial name="_PagerPartial" view-data="ViewData" model="Model"/>
+    </div>

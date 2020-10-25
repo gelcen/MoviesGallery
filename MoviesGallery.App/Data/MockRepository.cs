@@ -1,4 +1,5 @@
-﻿using MoviesGallery.App.Models;
+﻿using cloudscribe.Pagination.Models;
+using MoviesGallery.App.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,11 +39,15 @@ namespace MoviesGallery.App.Data
 
         public MockRepository()
         {
+			int day = 0;
             foreach (var item in _data)
             {
 				item.Title = char.ToUpper(item.Title[0]) + item.Title.Substring(1);
 				item.Description = char.ToUpper(item.Description[0]) + 
 					item.Description.Substring(1);
+				item.AddDate = DateTime.Now;
+				item.AddDate = item.AddDate.AddDays(day);
+				day++;
 			}
         }
 
@@ -63,7 +68,41 @@ namespace MoviesGallery.App.Data
 
         public Task<IEnumerable<Movie>> GetAll()
         {
-			return Task.FromResult<IEnumerable<Movie>>(_data);
+			return Task.FromResult<IEnumerable<Movie>>(_data.OrderByDescending(m => m.AddDate));
+        }
+
+        public Task<PagedResult<Movie>> GetAllInPage(int pageNumber, int pageSize)
+        {
+			int excludeRecords = (pageSize * pageNumber) - pageSize;
+
+			var query = _data
+				.OrderByDescending(m => m.AddDate)
+				.Skip(excludeRecords)
+				.Take(pageSize);
+
+            //    var query = db.EmailLists.OrderBy(x => x.Title)
+            //.Select(p => p)
+            //.Skip(offset)
+            //.Take(pageSize)
+            //;
+
+            //    var result = new PagedResult<EmailList>();
+            //    result.Data = await query.AsNoTracking().ToListAsync(cancellationToken);
+            //    result.TotalItems = await db.EmailLists.CountAsync();
+            //    result.PageNumber = pageNumber;
+            //    result.PageSize = pageSize;
+
+            var result = new PagedResult<Movie>
+            {
+                Data = query.ToList(),
+                TotalItems = _data.Count,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            return Task.FromResult(
+                result
+                );
         }
 
         public Task<Movie> GetById(long id)

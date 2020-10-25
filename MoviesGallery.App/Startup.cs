@@ -14,6 +14,8 @@ namespace MoviesGallery.App
             services.AddControllersWithViews();
 
             services.AddSingleton<IRepository<Movie>, MockRepository>();
+
+            services.AddCloudscribePagination();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using cloudscribe.Pagination.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace MoviesGallery.App.Data
     {
         Task<IEnumerable<T>> GetAll(); 
 
+        Task<PagedResult<T>> GetAllInPage(int pageNumber, int pageSize);
+
         Task<T> GetById(long id); 
 
         void Create(T item); 
@@ -18,5 +21,6 @@ namespace MoviesGallery.App.Data
         void Delete(long id);
 
         Task<IEnumerable<T>> Filter(Func<T, bool> predicate);
+
     }
 }
