@@ -8,47 +8,59 @@ using System.Threading.Tasks;
 
 namespace MoviesGallery.App.Data
 {
-	public class MockRepository : IRepository<Movie>
-	{
-		private List<Movie> _data = new List<Movie>
-		{
-			new Movie { Title = "ligula", Description = "nascetur ridiculus mus. Proin vel nisl. Quisque fringilla euismod enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris sagittis placerat. Cras dictum ultricies ligula. Nullam enim. Sed nulla ante, iaculis nec,", ReleaseYear = 2072 },
-			new Movie { Title = "nec", Description = "ut, molestie in, tempus eu, ligula. Aenean euismod mauris eu elit. Nulla facilisi. Sed neque. Sed eget lacus. Mauris non dui nec urna suscipit nonummy. Fusce fermentum fermentum arcu. Vestibulum ante ipsum", ReleaseYear = 1985 },
-			new Movie { Title = "Morbi", Description = "Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat tellus lorem eu metus. In lorem. Donec elementum,", ReleaseYear = 1980 },
-			new Movie { Title = "sem molestie sodales.", Description = "erat eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla semper tellus id nunc interdum feugiat. Sed nec metus facilisis lorem tristique aliquet. Phasellus fermentum convallis ligula. Donec luctus aliquet odio. Etiam ligula", ReleaseYear = 1921 },
-			new Movie { Title = "pede, ultrices a,", Description = "velit. Cras lorem lorem, luctus ut, pellentesque eget, dictum placerat, augue. Sed molestie. Sed id risus quis diam luctus lobortis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Mauris", ReleaseYear = 2087 },
-			new Movie { Title = "diam", Description = "vestibulum. Mauris magna. Duis dignissim tempor arcu. Vestibulum ut eros non enim commodo hendrerit. Donec porttitor tellus non magna. Nam ligula elit, pretium et, rutrum non, hendrerit id, ante. Nunc mauris sapien, cursus", ReleaseYear = 1907 },
-			new Movie { Title = "a, magna. Lorem", Description = "Cras dictum ultricies ligula. Nullam enim. Sed nulla ante, iaculis nec, eleifend non, dapibus rutrum, justo. Praesent luctus. Curabitur egestas nunc sed libero. Proin sed", ReleaseYear = 2002 },
-			new Movie { Title = "euismod est arcu", Description = "eu nibh vulputate mauris sagittis placerat. Cras dictum ultricies ligula. Nullam enim. Sed nulla ante, iaculis nec, eleifend non, dapibus rutrum, justo. Praesent", ReleaseYear = 2071 },
-			new Movie { Title = "a sollicitudin", Description = "lacus, varius et, euismod et, commodo at, libero. Morbi accumsan laoreet ipsum. Curabitur consequat, lectus sit amet luctus vulputate, nisi sem semper erat, in consectetuer ipsum nunc id enim.", ReleaseYear = 1930 },
-			new Movie { Title = "dignissim", Description = "rhoncus id, mollis nec, cursus a, enim. Suspendisse aliquet, sem ut cursus luctus, ipsum leo elementum sem, vitae aliquam eros", ReleaseYear = 1941 },
-			new Movie { Title = "auctor,", Description = "Aenean gravida nunc sed pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio tristique pharetra. Quisque ac libero nec ligula consectetuer rhoncus. Nullam", ReleaseYear = 2014 },
-			new Movie { Title = "neque. Nullam", Description = "elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar arcu et pede. Nunc sed orci lobortis augue scelerisque mollis. Phasellus libero mauris, aliquam eu, accumsan sed,", ReleaseYear = 2006 },
-			new Movie { Title = "a tortor. Nunc", Description = "metus facilisis lorem tristique aliquet. Phasellus fermentum convallis ligula. Donec luctus aliquet odio. Etiam ligula tortor, dictum eu, placerat eget, venenatis a, magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam laoreet, libero", ReleaseYear = 2026 },
-			new Movie { Title = "Aliquam", Description = "libero est, congue a, aliquet vel, vulputate eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu, eleifend nec, malesuada ut, sem. Nulla interdum. Curabitur dictum. Phasellus", ReleaseYear = 2074 },
-			new Movie { Title = "arcu. Vestibulum ante", Description = "elit fermentum risus, at fringilla purus mauris a nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget", ReleaseYear = 2002 },
-			new Movie { Title = "Morbi accumsan laoreet", Description = "Morbi metus. Vivamus euismod urna. Nullam lobortis quam a felis ullamcorper viverra. Maecenas iaculis aliquet diam. Sed diam lorem, auctor quis, tristique ac, eleifend vitae, erat. Vivamus nisi. Mauris nulla. Integer urna. Vivamus", ReleaseYear = 1983 },
-			new Movie { Title = "arcu. Morbi", Description = "congue turpis. In condimentum. Donec at arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec tincidunt. Donec vitae erat vel pede blandit congue. In", ReleaseYear = 1941 },
-			new Movie { Title = "amet", Description = "feugiat nec, diam. Duis mi enim, condimentum eget, volutpat ornare, facilisis eget, ipsum. Donec sollicitudin adipiscing ligula. Aenean gravida nunc sed pede. Cum sociis natoque penatibus et magnis", ReleaseYear = 2045 },
-			new Movie { Title = "Sed dictum.", Description = "porttitor eros nec tellus. Nunc lectus pede, ultrices a, auctor non, feugiat nec, diam. Duis mi enim, condimentum eget, volutpat ornare, facilisis eget, ipsum. Donec sollicitudin", ReleaseYear = 2086 },
-			new Movie { Title = "Vivamus", Description = "blandit enim consequat purus. Maecenas libero est, congue a, aliquet vel, vulputate eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit,", ReleaseYear = 1981 },
-			new Movie { Title = "Phasellus", Description = "netus et malesuada fames ac turpis egestas. Aliquam fringilla cursus purus. Nullam scelerisque neque sed sem egestas blandit. Nam nulla magna, malesuada vel, convallis in, cursus et, eros. Proin ultrices. Duis volutpat nunc sit amet", ReleaseYear = 1948 },
-			new Movie { Title = "eu neque pellentesque", Description = "dui nec urna suscipit nonummy. Fusce fermentum fermentum arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus ornare. Fusce mollis.", ReleaseYear = 2067 },
-			new Movie { Title = "urna justo", Description = "nec ante blandit viverra. Donec tempus, lorem fringilla ornare placerat, orci lacus vestibulum lorem, sit amet ultricies sem magna nec quam. Curabitur vel lectus. Cum sociis natoque penatibus et magnis", ReleaseYear = 2033 }
-		};
+    public class MockRepository : IRepository<Movie>
+    {
+        private List<Movie> _data = new List<Movie>
+        {
+    new Movie{ Title = "Nullam", Description = "ligula. Aenean euismod mauris eu elit. Nulla facilisi. Sed neque. Sed eget lacus. Mauris non dui nec urna suscipit nonummy. Fusce fermentum fermentum", ReleaseYear = 2056, Director = "Abra G. Coleman" },
+    new Movie{ Title = "sed tortor. Integer", Description = "dui nec urna suscipit nonummy. Fusce fermentum fermentum arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus ornare. Fusce", ReleaseYear = 2082, Director = "Jordan W. Nolan" },
+    new Movie{ Title = "elit", Description = "aliquet, sem ut cursus luctus, ipsum leo elementum sem, vitae aliquam eros turpis non enim. Mauris quis turpis vitae purus gravida sagittis. Duis", ReleaseYear = 1986, Director = "Caesar T. Whitney" },
+    new Movie{ Title = "ipsum", Description = "at pretium aliquet, metus urna convallis erat, eget tincidunt dui augue eu tellus. Phasellus elit pede, malesuada vel, venenatis vel, faucibus id, libero. Donec consectetuer mauris id sapien. Cras", ReleaseYear = 2076, Director = "Miranda D. Solis" },
+    new Movie{ Title = "velit.", Description = "Suspendisse sed dolor. Fusce mi lorem, vehicula et, rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit at, nisi. Cum", ReleaseYear = 2064, Director = "Wing K. Garrison" },
+    new Movie{ Title = "ac libero", Description = "lobortis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Mauris ut quam vel sapien imperdiet ornare. In faucibus. Morbi vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu.", ReleaseYear = 2034, Director = "Dale D. Montgomery" },
+    new Movie{ Title = "malesuada malesuada. Integer", Description = "ut erat. Sed nunc est, mollis non, cursus non, egestas a, dui. Cras pellentesque. Sed dictum. Proin eget odio. Aliquam vulputate", ReleaseYear = 2094, Director = "Oscar G. Hampton" },
+    new Movie{ Title = "vel nisl.", Description = "Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend, nunc risus varius orci, in consequat enim diam vel arcu. Curabitur ut odio vel est tempor bibendum. Donec felis orci, adipiscing non, luctus sit amet, faucibus ut, nulla.", ReleaseYear = 1971, Director = "Erasmus X. Dalton" },
+    new Movie{ Title = "ultrices.", Description = "turpis. Nulla aliquet. Proin velit. Sed malesuada augue ut lacus. Nulla tincidunt, neque vitae semper egestas, urna justo faucibus lectus, a sollicitudin orci sem eget massa. Suspendisse eleifend. Cras sed leo. Cras vehicula aliquet libero. Integer in magna. Phasellus", ReleaseYear = 2071, Director = "Kyle X. Washington" },
+    new Movie{ Title = "Sed eu nibh", Description = "sagittis. Duis gravida. Praesent eu nulla at sem molestie sodales. Mauris blandit enim consequat purus. Maecenas libero est, congue a, aliquet vel, vulputate eu, odio. Phasellus at augue id", ReleaseYear = 2064, Director = "Avye H. Graham" },
+    new Movie{ Title = "ligula eu enim.", Description = "Curabitur vel lectus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec dignissim magna a tortor. Nunc commodo auctor velit. Aliquam nisl. Nulla", ReleaseYear = 2089, Director = "Zeph L. Miller" },
+    new Movie{ Title = "egestas", Description = "dolor, nonummy ac, feugiat non, lobortis quis, pede. Suspendisse dui. Fusce diam nunc, ullamcorper eu, euismod ac, fermentum vel, mauris. Integer sem elit, pharetra ut,", ReleaseYear = 1972, Director = "Drake T. Walls" },
+    new Movie{ Title = "in faucibus orci", Description = "Morbi quis urna. Nunc quis arcu vel quam dignissim pharetra. Nam ac nulla. In tincidunt congue turpis. In condimentum. Donec", ReleaseYear = 1966, Director = "Jeremy F. Luna" },
+    new Movie{ Title = "fermentum", Description = "auctor. Mauris vel turpis. Aliquam adipiscing lobortis risus. In mi pede, nonummy ut, molestie in, tempus eu, ligula. Aenean euismod mauris eu elit. Nulla facilisi. Sed neque. Sed eget lacus. Mauris non dui nec urna suscipit nonummy. Fusce fermentum fermentum", ReleaseYear = 2062, Director = "Gray T. Justice" },
+    new Movie{ Title = "Proin vel arcu", Description = "lectus justo eu arcu. Morbi sit amet massa. Quisque porttitor eros nec tellus. Nunc lectus pede, ultrices a, auctor non, feugiat nec, diam.", ReleaseYear = 2024, Director = "Martha P. Bauer" },
+    new Movie{ Title = "dolor.", Description = "ullamcorper eu, euismod ac, fermentum vel, mauris. Integer sem elit, pharetra ut, pharetra sed, hendrerit a, arcu. Sed et libero. Proin mi. Aliquam gravida mauris ut mi.", ReleaseYear = 1941, Director = "Blaze N. Good" },
+    new Movie{ Title = "Aliquam gravida mauris", Description = "mus. Proin vel nisl. Quisque fringilla euismod enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris sagittis placerat. Cras dictum ultricies ligula. Nullam enim. Sed nulla ante, iaculis nec, eleifend", ReleaseYear = 2017, Director = "Vladimir F. Sheppard" },
+    new Movie{ Title = "lectus quis massa.", Description = "mi, ac mattis velit justo nec ante. Maecenas mi felis, adipiscing fringilla, porttitor vulputate, posuere vulputate, lacus. Cras interdum. Nunc sollicitudin commodo ipsum. Suspendisse non leo. Vivamus nibh dolor, nonummy ac,", ReleaseYear = 1969, Director = "Ferris I. Howell" },
+    new Movie{ Title = "sollicitudin", Description = "Suspendisse tristique neque venenatis lacus. Etiam bibendum fermentum metus. Aenean sed pede nec ante blandit viverra. Donec tempus, lorem fringilla ornare placerat, orci", ReleaseYear = 1946, Director = "Bell N. Russo" },
+    new Movie{ Title = "Donec", Description = "ligula elit, pretium et, rutrum non, hendrerit id, ante. Nunc mauris sapien, cursus in, hendrerit consectetuer, cursus et, magna. Praesent interdum ligula eu enim. Etiam imperdiet dictum", ReleaseYear = 1967, Director = "Rae G. Ferguson" },
+    new Movie{ Title = "iaculis aliquet", Description = "Pellentesque ultricies dignissim lacus. Aliquam rutrum lorem ac risus. Morbi metus. Vivamus euismod urna. Nullam lobortis quam a felis ullamcorper viverra. Maecenas iaculis aliquet diam. Sed diam lorem, auctor", ReleaseYear = 2067, Director = "Yolanda V. Lyons" },
+    new Movie{ Title = "arcu. Nunc", Description = "Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat semper rutrum. Fusce dolor quam, elementum at, egestas a,", ReleaseYear = 1961, Director = "Mechelle J. Branch" },
+    new Movie{ Title = "velit eget laoreet", Description = "quis arcu vel quam dignissim pharetra. Nam ac nulla. In tincidunt congue turpis. In condimentum. Donec at arcu. Vestibulum ante ipsum primis in faucibus orci luctus", ReleaseYear = 2038, Director = "Hadassah O. Dean" },
+    new Movie{ Title = "Sed", Description = "nunc sed pede. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio tristique pharetra. Quisque ac libero nec ligula consectetuer rhoncus. Nullam velit", ReleaseYear = 2030, Director = "Kiara E. Gibbs" },
+    new Movie{ Title = "facilisis eget,", Description = "arcu. Sed eu nibh vulputate mauris sagittis placerat. Cras dictum ultricies ligula. Nullam enim. Sed nulla ante, iaculis nec, eleifend non, dapibus rutrum,", ReleaseYear = 1913, Director = "Hashim M. Roberts" },
+    new Movie{ Title = "sapien, gravida non,", Description = "risus. Morbi metus. Vivamus euismod urna. Nullam lobortis quam a felis ullamcorper viverra. Maecenas iaculis aliquet diam. Sed diam lorem, auctor quis, tristique ac, eleifend vitae, erat. Vivamus nisi. Mauris nulla. Integer urna. Vivamus molestie dapibus", ReleaseYear = 1926, Director = "Jade F. Huff" },
+    new Movie{ Title = "hendrerit id, ante.", Description = "dictum. Phasellus in felis. Nulla tempor augue ac ipsum. Phasellus vitae mauris sit amet lorem semper auctor. Mauris vel turpis. Aliquam adipiscing lobortis risus. In mi pede, nonummy ut,", ReleaseYear = 2042, Director = "Keegan A. Horne" },
+    new Movie{ Title = "erat nonummy ultricies", Description = "Donec nibh. Quisque nonummy ipsum non arcu. Vivamus sit amet risus. Donec egestas. Aliquam nec enim. Nunc ut erat. Sed nunc est, mollis non, cursus non, egestas a, dui. Cras pellentesque. Sed dictum. Proin", ReleaseYear = 1991, Director = "Kylie P. Ferguson" },
+    new Movie{ Title = "aliquam iaculis,", Description = "eu erat semper rutrum. Fusce dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar arcu et pede. Nunc sed orci lobortis augue scelerisque mollis. Phasellus libero mauris, aliquam eu, accumsan sed, facilisis vitae, orci. Phasellus", ReleaseYear = 2053, Director = "Zena C. Duncan" },
+    new Movie{ Title = "elementum", Description = "Fusce mi lorem, vehicula et, rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit at, nisi. Cum sociis natoque", ReleaseYear = 1946, Director = "Harding C. Cantrell" },
+    new Movie{ Title = "turpis vitae purus", Description = "vehicula risus. Nulla eget metus eu erat semper rutrum. Fusce dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar arcu et pede. Nunc sed orci lobortis augue scelerisque mollis. Phasellus libero mauris, aliquam eu, accumsan", ReleaseYear = 2050, Director = "Aladdin X. Bailey" },
+    new Movie{ Title = "Suspendisse aliquet, sem", Description = "malesuada fames ac turpis egestas. Aliquam fringilla cursus purus. Nullam scelerisque neque sed sem egestas blandit. Nam nulla magna, malesuada vel, convallis in, cursus et, eros. Proin ultrices.", ReleaseYear = 1991, Director = "Brenden Q. Lloyd" },
+    new Movie{ Title = "augue", Description = "amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit at, nisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur", ReleaseYear = 2075, Director = "Breanna E. Bruce" },
+    new Movie{ Title = "ad litora", Description = "vitae sodales nisi magna sed dui. Fusce aliquam, enim nec tempus scelerisque, lorem ipsum sodales purus, in molestie tortor nibh sit amet orci. Ut sagittis lobortis mauris. Suspendisse aliquet molestie tellus. Aenean egestas hendrerit neque. In", ReleaseYear = 2063, Director = "Caesar J. Cooley" },
+        };
 
         public MockRepository()
         {
-			int day = 0;
+            int day = 0;
             foreach (var item in _data)
             {
-				item.Title = char.ToUpper(item.Title[0]) + item.Title.Substring(1);
-				item.Description = char.ToUpper(item.Description[0]) + 
-					item.Description.Substring(1);
-				item.AddDate = DateTime.Now;
-				item.AddDate = item.AddDate.AddDays(day);
-				day++;
-			}
+                item.Id = day;
+                item.Title = char.ToUpper(item.Title[0]) + item.Title.Substring(1);
+                item.Description = char.ToUpper(item.Description[0]) +
+                    item.Description.Substring(1);
+                item.AddDate = DateTime.Now;
+                item.AddDate = item.AddDate.AddDays(day);
+                day++;
+            }
         }
 
         public void Create(Movie item)
@@ -68,17 +80,17 @@ namespace MoviesGallery.App.Data
 
         public Task<IEnumerable<Movie>> GetAll()
         {
-			return Task.FromResult<IEnumerable<Movie>>(_data.OrderByDescending(m => m.AddDate));
+            return Task.FromResult<IEnumerable<Movie>>(_data.OrderByDescending(m => m.AddDate));
         }
 
         public Task<PagedResult<Movie>> GetAllInPage(int pageNumber, int pageSize)
         {
-			int excludeRecords = (pageSize * pageNumber) - pageSize;
+            int excludeRecords = (pageSize * pageNumber) - pageSize;
 
-			var query = _data
-				.OrderByDescending(m => m.AddDate)
-				.Skip(excludeRecords)
-				.Take(pageSize);
+            var query = _data
+                .OrderByDescending(m => m.AddDate)
+                .Skip(excludeRecords)
+                .Take(pageSize);
 
             //    var query = db.EmailLists.OrderBy(x => x.Title)
             //.Select(p => p)
@@ -107,7 +119,9 @@ namespace MoviesGallery.App.Data
 
         public Task<Movie> GetById(long id)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(
+                _data.FirstOrDefault(m => m.Id == id)
+                );
         }
 
         public void Update(Movie item)

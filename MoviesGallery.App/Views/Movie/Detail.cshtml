@@ -1,0 +1,16 @@
+﻿@model Movie
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <div class="row">
+            <h1 class="display-4 col-lg-auto">@Model.Title</h1> 
+            <div class="col-lg-2">
+                <button class="btn btn-primary m-3">Редактировать</button>
+            </div>
+            <div class="col-md-auto"></div>
+        </div>
+        <p class="card-text"><small class="text-muted">@Model.ReleaseYear, @Model.Director</small></p>
+        <p class="lead">@Model.Description</p>
+        <img src="~/static/images/hulki-okan-tabak-ulvhJg4tc7A-unsplash.jpg" class="img-fluid" alt="Responsive image">
+    </div>
+</div>

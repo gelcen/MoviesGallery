@@ -12,6 +12,8 @@ namespace MoviesGallery.App.Models
 
         public int ReleaseYear { get; set; }
 
+        public string Director { get; set; }
+
         public DateTime AddDate { get; set; }
     }
 }

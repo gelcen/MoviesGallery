@@ -20,7 +20,11 @@
                         <div class="card-body">
                             <h5 class="card-title">@movie.Title</h5>
                             <p class="card-text">@movie.Description</p>
-                            <button type="button" class="btn btn-primary">Подробнее</button>
+                            <a asp-controller="Movie"
+                               asp-action="Detail"
+                               asp-route-id="@movie.Id">
+                                <input type="button" class="btn btn-primary" value="Подробнее" />
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -25,7 +25,9 @@ namespace MoviesGallery.App.Controllers
             var pagedMovies = await _repo.GetAllInPage(pageNumber, pageSize);
             foreach (var movie in pagedMovies.Data)
             {
-                var vm = new HomePageMovieViewModel(movie.Title,
+                var vm = new HomePageMovieViewModel(
+                    movie.Id,
+                    movie.Title,
                     movie.Description);
                 viewModels.Add(vm);
             }
