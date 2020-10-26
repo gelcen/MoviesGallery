@@ -14,6 +14,6 @@ namespace MoviesGallery.App.Models
 
         public string Director { get; set; }
 
-        public DateTime AddDate { get; set; }
+        public DateTime AddDate { get; set; } = DateTime.Now;
     }
 }

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MoviesGallery.App.Data;
@@ -9,11 +11,25 @@ namespace MoviesGallery.App
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
-            services.AddSingleton<IRepository<Movie>, MockRepository>();
+            string connectionString = Configuration
+                .GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<MoviesGalleryContext>(options =>
+                options.UseSqlServer(connectionString));
+            //services.AddSingleton<IRepository<Movie>, MockRepository>();
+
+            services.AddTransient<IRepository<Movie>, MoviesRepository>();
 
             services.AddCloudscribePagination();
         }

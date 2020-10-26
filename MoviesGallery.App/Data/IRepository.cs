@@ -1,6 +1,7 @@
 ﻿using cloudscribe.Pagination.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace MoviesGallery.App.Data
@@ -20,7 +21,7 @@ namespace MoviesGallery.App.Data
 
         Task Delete(long id);
 
-        Task<IEnumerable<T>> Filter(Func<T, bool> predicate);
+        Task<IEnumerable<T>> Filter(Expression<Func<T, bool>> predicate);
 
     }
 }

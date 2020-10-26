@@ -26,6 +26,13 @@
             <label for="description">Описание</label>
             <textarea class="form-control" id="description" rows="3" asp-for="Description"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Создать</button>
+        @if (Model.Id == 0)
+        {
+            <button type="submit" class="btn btn-primary">Создать</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        }
     </form>
 </div>
