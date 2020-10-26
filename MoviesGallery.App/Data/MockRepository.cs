@@ -63,14 +63,19 @@ namespace MoviesGallery.App.Data
             }
         }
 
-        public void Create(Movie item)
+        public async Task Create(Movie item)
         {
-            throw new NotImplementedException();
+            int id = _data.Count + 1;
+            item.Id = id;
+            _data.Add(item);
+
+            await Task.FromResult(id);
         }
 
-        public void Delete(long id)
+        public async Task Delete(long id)
         {
-            throw new NotImplementedException();
+            var movie = await GetById(id);
+            _data.Remove(movie);
         }
 
         public Task<IEnumerable<Movie>> Filter(Func<Movie, bool> predicate)
@@ -124,9 +129,13 @@ namespace MoviesGallery.App.Data
                 );
         }
 
-        public void Update(Movie item)
+        public async Task Update(Movie item)
         {
-            throw new NotImplementedException();
+            var old = await GetById(item.Id);
+            old.Title = item.Title;
+            old.Director = item.Director;
+            old.ReleaseYear = item.ReleaseYear;
+            old.Description = item.Description;
         }
     }
 }

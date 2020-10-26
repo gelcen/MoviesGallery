@@ -14,11 +14,11 @@ namespace MoviesGallery.App.Data
 
         Task<T> GetById(long id); 
 
-        void Create(T item); 
+        Task Create(T item); 
 
-        void Update(T item); 
+        Task Update(T item); 
 
-        void Delete(long id);
+        Task Delete(long id);
 
         Task<IEnumerable<T>> Filter(Func<T, bool> predicate);
 
