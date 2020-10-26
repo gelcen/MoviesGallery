@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MoviesGallery.App.Data;
+using MoviesGallery.App.Data.FileManager;
 using MoviesGallery.App.Models;
 
 namespace MoviesGallery.App
@@ -30,6 +31,7 @@ namespace MoviesGallery.App
             //services.AddSingleton<IRepository<Movie>, MockRepository>();
 
             services.AddTransient<IRepository<Movie>, MoviesRepository>();
+            services.AddTransient<IFileManager, FileManager>();
 
             services.AddCloudscribePagination();
         }

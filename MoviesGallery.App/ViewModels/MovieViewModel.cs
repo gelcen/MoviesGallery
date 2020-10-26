@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace MoviesGallery.App.Models
+namespace MoviesGallery.App.ViewModels
 {
-    public class Movie
+    public class MovieViewModel
     {
         public long Id { get; set; }
 
@@ -14,8 +14,6 @@ namespace MoviesGallery.App.Models
 
         public string Director { get; set; }
 
-        public string Image { get; set; } = "";
-
-        public DateTime AddDate { get; set; } = DateTime.Now;
+        public IFormFile Image { get; set; } = null;
     }
 }

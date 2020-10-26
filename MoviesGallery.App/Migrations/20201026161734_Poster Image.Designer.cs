@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesGallery.App.Data;
 
 namespace MoviesGallery.App.Migrations
 {
     [DbContext(typeof(MoviesGalleryContext))]
-    partial class MoviesGalleryContextModelSnapshot : ModelSnapshot
+    [Migration("20201026161734_Poster Image")]
+    partial class PosterImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

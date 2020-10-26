@@ -1,34 +1,41 @@
 ﻿@model cloudscribe.Pagination.Models.PagedResult<HomePageMovieViewModel>
-@{ 
+@{
     ViewData["Controller"] = "Home";
     ViewData["Action"] = "Index";
 }
 
 
-    <div>
-        <h1>
-            Hello World
-        </h1>
-        @foreach (var movie in Model.Data)
-        {
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row no-gutters">
-                    <div class="col-md-4" style="background-color: dimgrey;">
-                        @*<img src="..." class="card-img" alt="...">*@
+<div>
+    <h1>
+        Hello World
+    </h1>
+    @foreach (var movie in Model.Data)
+    {
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row no-gutters">
+                @if (!String.IsNullOrEmpty(movie.Image))
+                {
+                    var imgPath = $"/Image/{movie.Image}";
+                    <img src="@imgPath" class="card-img" alt="@movie.Title Poster">
+                }
+                else
+                {
+                    <div class="col-md-4" style="background-color: aquamarine;">
                     </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">@movie.Title</h5>
-                            <p class="card-text">@movie.Description</p>
-                            <a asp-controller="Movie"
-                               asp-action="Detail"
-                               asp-route-id="@movie.Id">
-                                <input type="button" class="btn btn-primary" value="Подробнее" />
-                            </a>
-                        </div>
+                }
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">@movie.Title</h5>
+                        <p class="card-text">@movie.Description</p>
+                        <a asp-controller="Movie"
+                           asp-action="Detail"
+                           asp-route-id="@movie.Id">
+                            <input type="button" class="btn btn-primary" value="Подробнее" />
+                        </a>
                     </div>
                 </div>
             </div>
-        }
-        <partial name="_PagerPartial" view-data="ViewData" model="Model"/>
-    </div>
+        </div>
+    }
+    <partial name="_PagerPartial" view-data="ViewData" model="Model" />
+</div>

@@ -4,12 +4,15 @@
     {
         private readonly string _description;
 
-        public HomePageMovieViewModel(long id, string title, string desc)
+        public HomePageMovieViewModel(long id, string title, string desc, string image)
         {
             Id = id;
             Title = title;
             _description = desc;
+            Image = image;
         }
+
+        public string Image { get; }
 
         public long Id { get; }
 

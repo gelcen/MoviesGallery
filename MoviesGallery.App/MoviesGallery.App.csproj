@@ -5,15 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\static\images\hulki-okan-tabak-ulvhJg4tc7A-unsplash.jpg" />
-    <Content Remove="wwwroot\static\images\karina-lago--OpEshnHkWk-unsplash.jpg" />
-    <Content Remove="wwwroot\static\images\lucas-santos-Xx1OQBR3mns-unsplash.jpg" />
-    <Content Remove="wwwroot\static\images\matt-popovich-0FZrPECK5cg-unsplash.jpg" />
-    <Content Remove="wwwroot\static\images\serge-kutuzov-7ya3l_JdHpM-unsplash.jpg" />
-    <Content Remove="wwwroot\static\images\valentin-petkov-i03NbP3Wv9I-unsplash.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="cloudscribe.Pagination.Models" Version="1.1.0" />
     <PackageReference Include="cloudscribe.Web.Pagination" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
@@ -29,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\static\images\" />
+    <Folder Include="wwwroot\content\gallery\" />
+    <Folder Include="wwwroot\content\static\" />
   </ItemGroup>
 
 </Project>
