@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using cloudscribe.Pagination.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MoviesGallery.App.Data;
 using MoviesGallery.App.Data.FileManager;
 using MoviesGallery.App.Models;
 using MoviesGallery.App.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MoviesGallery.App.Controllers
@@ -30,6 +33,34 @@ namespace MoviesGallery.App.Controllers
             return View(movie);
         }
 
+        [Authorize]
+        public async Task<IActionResult> MyMovies(int pageNumber = 1, int pageSize = 4)
+        {
+            var viewModels = new List<HomePageMovieViewModel>();
+            var pagedMovies = await _repo.GetAllInPage(pageNumber, pageSize);
+            foreach (var movie in pagedMovies.Data.Where(m => m.Username == 
+            _httpContext.HttpContext.User.Identity.Name))
+            {
+                var vm = new HomePageMovieViewModel(
+                    movie.Id,
+                    movie.Title,
+                    movie.Description,
+                    movie.Image,
+                    movie.Username);
+                viewModels.Add(vm);
+            }
+
+            var pagedVm = new PagedResult<HomePageMovieViewModel>()
+            {
+                Data = viewModels,
+                TotalItems = pagedMovies.TotalItems,
+                PageNumber = pagedMovies.PageNumber,
+                PageSize = pagedMovies.PageSize
+            };
+
+            return View(pagedVm);
+        }
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> Edit(long? id)
@@ -48,7 +79,8 @@ namespace MoviesGallery.App.Controllers
                     Director = movie.Director,
                     ReleaseYear = movie.ReleaseYear,
                     Description = movie.Description,
-                    Username = movie.Username
+                    Username = movie.Username,
+                    CurrentImage = movie.Image
                 });
             }
         }
@@ -57,6 +89,9 @@ namespace MoviesGallery.App.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(MovieViewModel vm)
         {
+            if (!ModelState.IsValid)
+                return View(vm);
+
             var movie = new Movie
             {
                 Id = vm.Id,
@@ -64,9 +99,18 @@ namespace MoviesGallery.App.Controllers
                 Director = vm.Director,
                 ReleaseYear = vm.ReleaseYear,
                 Description = vm.Description,
-                Image = await _fileManager.SaveImage(vm.Image),
                 Username = vm.Username
             };
+
+            if (vm.Image == null)
+            {
+                movie.Image = vm.CurrentImage;
+            }
+            else
+            {
+                movie.Image = await _fileManager.SaveImage(vm.Image);
+            }
+
             if (movie.Id > 0)
             {
                 await _repo.Update(movie);

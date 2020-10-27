@@ -26,7 +26,7 @@ namespace MoviesGallery.App.Data.FileManager
             try
             {
                 var savePath = Path.Combine(_imagePath);
-                if (Directory.Exists(savePath))
+                if (!Directory.Exists(savePath))
                 {
                     Directory.CreateDirectory(savePath);
                 }

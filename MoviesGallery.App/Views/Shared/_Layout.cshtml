@@ -41,7 +41,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Мои фильмы</a>
+                                <a class="nav-link" asp-controller="Movie" asp-action="MyMovies">Мои фильмы</a>
                             </li>
 
                             <li class="nav-item">

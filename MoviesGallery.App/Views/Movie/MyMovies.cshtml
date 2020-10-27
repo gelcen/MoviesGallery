@@ -1,13 +1,13 @@
 ﻿@model cloudscribe.Pagination.Models.PagedResult<HomePageMovieViewModel>
 @{
-    ViewData["Controller"] = "Home";
-    ViewData["Action"] = "Index";
+    ViewData["Controller"] = "Movie";
+    ViewData["Action"] = "MyMovies";
 }
 
 
 <div>
     <h1>
-        Галлерея фильмов
+        Мои добавленные фильмы
     </h1>
     @foreach (var movie in Model.Data)
     {
