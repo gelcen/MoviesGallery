@@ -32,6 +32,19 @@
                            asp-route-id="@movie.Id">
                             <input type="button" class="btn btn-primary" value="Подробнее" />
                         </a>
+                        @if (User.Identity.IsAuthenticated && movie.Username == User.Identity.Name)
+                        {
+                            <a asp-controller="Movie"
+                               asp-action="Edit"
+                               asp-route-id="@movie.Id">
+                                <input type="button" class="btn btn-primary m-2" value="Редактировать" />
+                            </a>
+                            <a asp-controller="Movie"
+                               asp-action="Remove"
+                               asp-route-id="@movie.Id">
+                                <input type="button" class="btn btn-danger m-2" style="margin-left: 0" value="Удалить" />
+                            </a>
+                        }
                     </div>
                 </div>
             </div>

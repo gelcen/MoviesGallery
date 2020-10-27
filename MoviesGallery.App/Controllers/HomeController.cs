@@ -27,7 +27,8 @@ namespace MoviesGallery.App.Controllers
                     movie.Id,
                     movie.Title,
                     movie.Description,
-                    movie.Image);
+                    movie.Image,
+                    movie.Username);
                 viewModels.Add(vm);
             }
 

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MoviesGallery.App.Data;
 using MoviesGallery.App.Data.FileManager;
 using MoviesGallery.App.Models;
@@ -11,12 +13,15 @@ namespace MoviesGallery.App.Controllers
     {
         private readonly IRepository<Movie> _repo;
         private readonly IFileManager _fileManager;
+        private readonly IHttpContextAccessor _httpContext;
 
         public MovieController(IRepository<Movie> repository,
-            IFileManager fileManager)
+            IFileManager fileManager,
+            IHttpContextAccessor httpContext)
         {
             _repo = repository;
             _fileManager = fileManager;
+            _httpContext = httpContext;
         }
 
         public async Task<IActionResult> Detail(long id)
@@ -26,6 +31,7 @@ namespace MoviesGallery.App.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -42,11 +48,13 @@ namespace MoviesGallery.App.Controllers
                     Director = movie.Director,
                     ReleaseYear = movie.ReleaseYear,
                     Description = movie.Description,
+                    Username = movie.Username
                 });
             }
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(MovieViewModel vm)
         {
             var movie = new Movie
@@ -56,7 +64,8 @@ namespace MoviesGallery.App.Controllers
                 Director = vm.Director,
                 ReleaseYear = vm.ReleaseYear,
                 Description = vm.Description,
-                Image = await _fileManager.SaveImage(vm.Image)
+                Image = await _fileManager.SaveImage(vm.Image),
+                Username = vm.Username
             };
             if (movie.Id > 0)
             {
@@ -64,12 +73,14 @@ namespace MoviesGallery.App.Controllers
             }
             else
             {
+                movie.Username = _httpContext.HttpContext.User.Identity.Name;
                 await _repo.Create(movie);
             }
 
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         public async Task<IActionResult> Remove(long id)
         {
             await _repo.Delete(id);

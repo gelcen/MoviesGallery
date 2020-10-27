@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MoviesGallery.App.Models;
 
 namespace MoviesGallery.App.Data
 {
-    public class MoviesGalleryContext : DbContext
+    public class MoviesGalleryContext : IdentityDbContext<IdentityUser>
     {
         public MoviesGalleryContext(
             DbContextOptions<MoviesGalleryContext> options)

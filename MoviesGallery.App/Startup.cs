@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,10 +30,20 @@ namespace MoviesGallery.App
 
             services.AddDbContext<MoviesGalleryContext>(options =>
                 options.UseSqlServer(connectionString));
-            //services.AddSingleton<IRepository<Movie>, MockRepository>();
+
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+            })
+            .AddEntityFrameworkStores<MoviesGalleryContext>();
 
             services.AddTransient<IRepository<Movie>, MoviesRepository>();
             services.AddTransient<IFileManager, FileManager>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddCloudscribePagination();
         }
@@ -45,6 +57,9 @@ namespace MoviesGallery.App
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();   
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -4,16 +4,20 @@
     <div class="container">
         <div class="d-flex flex-row mb-3">
             <h1 class="display-4">@Model.Title</h1>
-            <a asp-controller="Movie"
-               asp-action="Edit"
-               asp-route-id="@Model.Id">
-                <input type="button" class="btn btn-primary m-2" value="Редактировать" />
-            </a>
-            <a asp-controller="Movie"
-               asp-action="Remove"
-               asp-route-id="@Model.Id">
-                <input type="button" class="btn btn-danger m-2" style="margin-left: 0" value="Удалить" />
-            </a>
+
+            @if (User.Identity.IsAuthenticated && Model.Username == User.Identity.Name)
+            {
+                <a asp-controller="Movie"
+                   asp-action="Edit"
+                   asp-route-id="@Model.Id">
+                    <input type="button" class="btn btn-primary m-2" value="Редактировать" />
+                </a>
+                <a asp-controller="Movie"
+                   asp-action="Remove"
+                   asp-route-id="@Model.Id">
+                    <input type="button" class="btn btn-danger m-2" style="margin-left: 0" value="Удалить" />
+                </a>
+            }
         </div>
         <p class="card-text"><small class="text-muted">@Model.ReleaseYear, @Model.Director</small></p>
         <p class="lead">@Model.Description</p>

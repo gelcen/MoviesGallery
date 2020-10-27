@@ -31,6 +31,9 @@ namespace MoviesGallery.App.Data.FileManager
                     Directory.CreateDirectory(savePath);
                 }
 
+                if (image == null)
+                    return "";
+
                 var mime = image.FileName
                     .Substring(image.FileName.LastIndexOf('.'));
                 var fileName = $"img_{DateTime.Now:dd-MM-yyyy-HH-mm-ss}{mime}";

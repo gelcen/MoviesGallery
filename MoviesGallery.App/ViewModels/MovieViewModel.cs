@@ -14,6 +14,8 @@ namespace MoviesGallery.App.ViewModels
 
         public string Director { get; set; }
 
+        public string Username { get; set; }
+
         public IFormFile Image { get; set; } = null;
     }
 }
