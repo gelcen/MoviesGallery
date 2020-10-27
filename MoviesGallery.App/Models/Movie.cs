@@ -14,6 +14,10 @@ namespace MoviesGallery.App.Models
 
         public string Director { get; set; }
 
-        public DateTime AddDate { get; set; }
+        public string Image { get; set; } = "";
+
+        public string Username { get; set; }
+
+        public DateTime AddDate { get; set; } = DateTime.Now;
     }
 }

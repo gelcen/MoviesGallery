@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MoviesGallery.App.Data;
 using MoviesGallery.App.Models;
 using MoviesGallery.App.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MoviesGallery.App.Controllers
@@ -28,7 +26,9 @@ namespace MoviesGallery.App.Controllers
                 var vm = new HomePageMovieViewModel(
                     movie.Id,
                     movie.Title,
-                    movie.Description);
+                    movie.Description,
+                    movie.Image,
+                    movie.Username);
                 viewModels.Add(vm);
             }
 

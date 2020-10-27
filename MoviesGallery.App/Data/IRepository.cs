@@ -1,6 +1,7 @@
 ﻿using cloudscribe.Pagination.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace MoviesGallery.App.Data
@@ -8,9 +9,11 @@ namespace MoviesGallery.App.Data
     public interface IRepository<T>
         where T : class
     {
-        Task<IEnumerable<T>> GetAll(); 
+        Task<IEnumerable<T>> GetAll();
 
-        Task<PagedResult<T>> GetAllInPage(int pageNumber, int pageSize);
+  
+        Task<PagedResult<T>> GetAllInPage(int pageNumber, int pageSize,
+            Expression<Func<T, bool>> predicate = null);
 
         Task<T> GetById(long id); 
 
@@ -20,7 +23,7 @@ namespace MoviesGallery.App.Data
 
         Task Delete(long id);
 
-        Task<IEnumerable<T>> Filter(Func<T, bool> predicate);
+        Task<IEnumerable<T>> Filter(Expression<Func<T, bool>> predicate);
 
     }
 }
