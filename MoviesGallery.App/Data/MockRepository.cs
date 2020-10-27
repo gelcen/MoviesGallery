@@ -1,4 +1,8 @@
 ﻿using cloudscribe.Pagination.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using MoviesGallery.App.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +15,7 @@ namespace MoviesGallery.App.Data
 {
     public class MockRepository : IRepository<Movie>
     {
-        private List<Movie> _data = new List<Movie>
+        private static List<Movie> _data = new List<Movie>
         {
     new Movie{ Title = "Nullam", Description = "ligula. Aenean euismod mauris eu elit. Nulla facilisi. Sed neque. Sed eget lacus. Mauris non dui nec urna suscipit nonummy. Fusce fermentum fermentum", ReleaseYear = 2056, Director = "Abra G. Coleman" },
     new Movie{ Title = "sed tortor. Integer", Description = "dui nec urna suscipit nonummy. Fusce fermentum fermentum arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus ornare. Fusce", ReleaseYear = 2082, Director = "Jordan W. Nolan" },
@@ -64,6 +68,75 @@ namespace MoviesGallery.App.Data
             }
         }
 
+        public static void EnsurePopulated(IApplicationBuilder app)
+        {
+            using var serviceScope = app.ApplicationServices.CreateScope();
+            var ctx = serviceScope.ServiceProvider
+                .GetRequiredService<MoviesGalleryContext>();
+            var userManager = serviceScope.ServiceProvider.
+                GetRequiredService<UserManager<IdentityUser>>();
+
+            ctx.Database.Migrate();
+
+            var usersList = new List<string>();
+
+            if (!ctx.Users.Any())
+            {
+                IdentityUser user1 = new IdentityUser
+                {
+                    Email = "user1@mail.com",
+                    UserName = "user1@mail.com"
+                };
+                _ = userManager.CreateAsync(user1, "user1");
+                usersList.Add(user1.UserName);
+
+                IdentityUser user2 = new IdentityUser
+                {
+                    Email = "user2@mail.com",
+                    UserName = "user2@mail.com"
+                };
+                _ = userManager.CreateAsync(user2, "user2");
+                usersList.Add(user2.UserName);
+
+                IdentityUser user3 = new IdentityUser
+                {
+                    Email = "user3@mail.com",
+                    UserName = "user3@mail.com"
+                };
+                _ = userManager.CreateAsync(user3, "user3");
+                usersList.Add(user3.UserName);
+            }
+
+            var imgList = new List<string>
+            {
+                "img_27-10-2020-15-13-00.bmp",
+                "img_27-10-2020-15-13-23.bmp",
+                "img_27-10-2020-15-13-38.jpg",
+                "img_27-10-2020-15-14-06.BMP"
+            };
+
+            if (!ctx.Movies.Any())
+            {
+                var random = new Random();
+                foreach (var item in _data)
+                {
+                    int randUser = random.Next(0, 2);
+                    int randImg = random.Next(0, 3);
+
+                    item.Title = char.ToUpper(item.Title[0]) + item.Title.Substring(1);
+                    item.Description = char.ToUpper(item.Description[0]) +
+                        item.Description.Substring(1);
+                    item.AddDate = DateTime.Now;
+
+                    item.Username = usersList[randUser];
+                    item.Image = imgList[randImg];
+
+                    ctx.Add(item);
+                }
+                ctx.SaveChanges();
+            }
+        }
+
         public async Task Create(Movie item)
         {
             int id = _data.Count + 1;
@@ -103,18 +176,6 @@ namespace MoviesGallery.App.Data
                 .Skip(excludeRecords)
                 .Take(pageSize);
 
-            //    var query = db.EmailLists.OrderBy(x => x.Title)
-            //.Select(p => p)
-            //.Skip(offset)
-            //.Take(pageSize)
-            //;
-
-            //    var result = new PagedResult<EmailList>();
-            //    result.Data = await query.AsNoTracking().ToListAsync(cancellationToken);
-            //    result.TotalItems = await db.EmailLists.CountAsync();
-            //    result.PageNumber = pageNumber;
-            //    result.PageSize = pageSize;
-
             var result = new PagedResult<Movie>
             {
                 Data = query.ToList(),
@@ -126,6 +187,11 @@ namespace MoviesGallery.App.Data
             return Task.FromResult(
                 result
                 );
+        }
+
+        public Task<PagedResult<Movie>> GetAllInPage(int pageNumber, int pageSize, Expression<Func<Movie, bool>> predicate = null)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<Movie> GetById(long id)

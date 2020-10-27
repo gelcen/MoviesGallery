@@ -44,22 +44,52 @@ namespace MoviesGallery.App.Data
             return movies;
         }
 
-        public async Task<PagedResult<Movie>> GetAllInPage(int pageNumber, int pageSize)
+        public async Task<PagedResult<Movie>> GetAllInPage(int pageNumber, int pageSize, 
+            Expression<Func<Movie, bool>> predicate = null)
         {
             int excludeRecords = (pageSize * pageNumber) - pageSize;
 
-            var query = _ctx.Movies
-                .OrderByDescending(m => m.AddDate)
-                .Skip(excludeRecords)
-                .Take(pageSize);
+            IQueryable<Movie> query = null;
 
-            var result = new PagedResult<Movie>
+            if (predicate == null)
             {
-                Data = await query.AsNoTracking().ToListAsync(),
-                TotalItems = await _ctx.Movies.CountAsync(),
-                PageNumber = pageNumber,
-                PageSize = pageSize
-            };
+                query = _ctx.Movies
+                    .OrderByDescending(m => m.AddDate)
+                    .Skip(excludeRecords)
+                    .Take(pageSize);
+            }
+            else
+            {
+                query = _ctx.Movies
+                    .Where(predicate)
+                    .OrderByDescending(m => m.AddDate)
+                    .Skip(excludeRecords)
+                    .Take(pageSize);
+            }
+
+            PagedResult<Movie> result = null;
+
+            if (predicate == null)
+            {
+                result = new PagedResult<Movie>
+                {
+                    Data = await query.AsNoTracking().ToListAsync(),
+                    TotalItems = await _ctx.Movies.CountAsync(),
+                    PageNumber = pageNumber,
+                    PageSize = pageSize
+                };
+            }
+            else
+            {
+                result = new PagedResult<Movie>
+                {
+                    Data = await query.AsNoTracking().ToListAsync(),
+                    TotalItems = await _ctx.Movies.Where(predicate).CountAsync(),
+                    PageNumber = pageNumber,
+                    PageSize = pageSize
+                };
+
+            }
 
             return result;
         }

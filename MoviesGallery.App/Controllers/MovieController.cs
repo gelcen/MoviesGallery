@@ -37,9 +37,9 @@ namespace MoviesGallery.App.Controllers
         public async Task<IActionResult> MyMovies(int pageNumber = 1, int pageSize = 4)
         {
             var viewModels = new List<HomePageMovieViewModel>();
-            var pagedMovies = await _repo.GetAllInPage(pageNumber, pageSize);
-            foreach (var movie in pagedMovies.Data.Where(m => m.Username == 
-            _httpContext.HttpContext.User.Identity.Name))
+            var pagedMovies = await _repo.GetAllInPage(pageNumber, pageSize,
+                m => m.Username == _httpContext.HttpContext.User.Identity.Name);
+            foreach (var movie in pagedMovies.Data)
             {
                 var vm = new HomePageMovieViewModel(
                     movie.Id,

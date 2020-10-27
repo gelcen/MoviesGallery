@@ -9,9 +9,11 @@ namespace MoviesGallery.App.Data
     public interface IRepository<T>
         where T : class
     {
-        Task<IEnumerable<T>> GetAll(); 
+        Task<IEnumerable<T>> GetAll();
 
-        Task<PagedResult<T>> GetAllInPage(int pageNumber, int pageSize);
+  
+        Task<PagedResult<T>> GetAllInPage(int pageNumber, int pageSize,
+            Expression<Func<T, bool>> predicate = null);
 
         Task<T> GetById(long id); 
 

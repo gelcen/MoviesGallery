@@ -23,8 +23,6 @@ namespace MoviesGallery.App
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-
             string connectionString = Configuration
                 .GetConnectionString("DefaultConnection");
 
@@ -46,6 +44,8 @@ namespace MoviesGallery.App
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddCloudscribePagination();
+
+            services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -67,6 +67,8 @@ namespace MoviesGallery.App
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            MockRepository.EnsurePopulated(app);
         }
     }
 }
